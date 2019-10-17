@@ -4,7 +4,8 @@
   "description": "React SVG arrow between two HTML elements",
   "main": "dist/main.js",
   "scripts": {
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "lint": "eslint src --fix"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +17,10 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
+    "eslint": "^6.5.1",
+    "eslint-plugin-react": "^7.16.0",
     "react": "16.8.6"
   },
   "peerDependencies": {
