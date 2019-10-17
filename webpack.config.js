@@ -5,8 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
-    libraryTarget: 'umd',
-    umdNamedDefine: true
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
@@ -18,5 +17,10 @@ module.exports = {
         }
       }
     ]
+  },
+  externals: {
+    react: {
+      commonjs2: "react"
+    }
   }
 };

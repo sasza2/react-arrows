@@ -9,14 +9,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "arrows-svg": "^1.0.3",
-    "react": "^16.10.2"
+    "arrows-svg": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "babel-loader": "^8.0.6",
-    "babel-preset-minify": "^0.5.1"
+    "react": "16.8.6"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.6"
   }
 }
