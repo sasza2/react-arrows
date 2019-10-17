@@ -1,20 +1,21 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import arrowCreate, { DIRECTION } from 'arrows-svg'
 
 const Arrow = (props) => {
-  const arrow = useRef()
+  const arrowRef = useRef()
 
-  useEffect(() => () => {
-    if (arrow.current) clearInterval(arrow.current.timer)
-  }, [])
+  useLayoutEffect(() => {
+    const arrow = arrowCreate(props)
+    if (arrowRef.current) arrowRef.current.appendChild(arrow.node)
 
-  const init = (node) => {
-    arrow.current = arrowCreate(props)
-    node.appendChild(arrow.current.node)
-  }
+    return () => {
+      clearInterval(arrow.timer)
+      if (arrowRef.current) arrowRef.current.removeChild(arrow.node)
+    }
+  }, [props])
 
   return (
-    <span ref={init} />
+    <span ref={arrowRef} />
   )
 }
 
