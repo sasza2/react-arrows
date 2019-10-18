@@ -8,9 +8,9 @@
     "lint": "eslint src --fix"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "arrows-svg": "^1.0.3"
+    "arrows-svg": "^1.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
