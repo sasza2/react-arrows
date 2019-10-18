@@ -20,9 +20,6 @@ const useObserver = (props) => {
         setMounted(true)
         return true
       }
-      
-      setMounted(false)
-      return false
     }
 
     if (observe()) return
