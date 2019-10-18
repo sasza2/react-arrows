@@ -10,7 +10,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "arrows-svg": "^1.0.5"
+    "arrows-svg": "^1.0.5",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

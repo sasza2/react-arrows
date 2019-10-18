@@ -1,24 +1,35 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { memo, useLayoutEffect, useRef, useState } from 'react'
+import isFunction from 'lodash/isFunction'
 import arrowCreate, { DIRECTION } from 'arrows-svg'
+
+const nodeValue = (node) => (isFunction(node)
+  ? node()
+  : node
+)
+
+const nodeSafe = (point = {}) => nodeValue(point.node)
 
 const useObserver = (props) => {
   const [mounted, setMounted] = useState(false)
 
   useLayoutEffect(() => {
     const observe = () => {
-      const from = props.node.from()
-      const to = props.node.to()
+      const from = nodeSafe(props.from)
+      const to = nodeSafe(props.to)
       if(from && to){
         setMounted(true)
         return true
       }
+      
+      setMounted(false)
+      return false
     }
 
     if (observe()) return
 
     const timer = setInterval(observe, 150)
     return () => clearInterval(timer)
-  }, [props])
+  }, [mounted, props])
 
   return mounted
 }
@@ -32,11 +43,22 @@ const Arrow = (props) => {
     
     let arrow
     try {
-      arrow = arrowCreate(props)
+      arrow = arrowCreate({
+        ...props,
+        from: {
+          ...props.from,
+          node: nodeSafe(props.from),
+        },
+        to: {
+          ...props.to,
+          node: nodeSafe(props.to),
+        }
+      })
     } catch(e){
       console.warn(e);
       return;
     }
+
     if (arrowRef.current) arrowRef.current.appendChild(arrow.node)
 
     return () => {
@@ -50,5 +72,5 @@ const Arrow = (props) => {
   )
 }
 
-export default Arrow
+export default memo(Arrow)
 export { DIRECTION }
