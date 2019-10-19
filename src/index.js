@@ -1,31 +1,8 @@
-import React, { memo, useLayoutEffect, useRef, useState } from 'react'
+import React, { memo, useLayoutEffect, useRef } from 'react'
 import arrowCreate, { DIRECTION } from 'arrows-svg'
 
 import { nodeSafe } from './helpers/node'
-
-const useObserver = (props) => {
-  const [mounted, setMounted] = useState(false)
-
-  useLayoutEffect(() => {
-    const observe = () => {
-      const from = nodeSafe(props.from)
-      const to = nodeSafe(props.to)
-      if(from && to){
-        setMounted(true)
-        return true
-      } else {
-        setMounted(false)
-      }
-    }
-
-    if (observe()) return
-
-    const timer = setInterval(observe, 150)
-    return () => clearInterval(timer)
-  }, [mounted, props])
-
-  return mounted
-}
+import useObserver from './hooks/useObserver'
 
 const Arrow = (props) => {
   const arrowRef = useRef()
