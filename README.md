@@ -38,12 +38,12 @@ import Arrow, { DIRECTION } from 'react-arrows'
   className='arrow'
   from={{
     direction: DIRECTION.TOP,
-    node: document.getElementById('from'),
+    node: () => document.getElementById('from'),
     translation: [-0.5, -1],
   }}
   to={{
     direction: DIRECTION.RIGHT,
-    node: document.getElementById('to'),
+    node: () => document.getElementById('to'),
     translation: [0.9, 1],
   }}
 />
@@ -56,7 +56,7 @@ Could be also used from `window.arrowCreate()` -> https://github.com/sasza2/arro
 ```typescript
 interface Point {
   direction: Direction;
-  node: HTMLElement;
+  node: HTMLElement; // Could be also function that's returning HTMLElement
   translation: Array<number>;
 }
 ```
