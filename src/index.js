@@ -1,13 +1,7 @@
 import React, { memo, useLayoutEffect, useRef, useState } from 'react'
-import isFunction from 'lodash/isFunction'
 import arrowCreate, { DIRECTION } from 'arrows-svg'
 
-const nodeValue = (node) => (isFunction(node)
-  ? node()
-  : node
-)
-
-const nodeSafe = (point = {}) => nodeValue(point.node)
+import { nodeSafe } from './helpers/node'
 
 const useObserver = (props) => {
   const [mounted, setMounted] = useState(false)
@@ -19,6 +13,8 @@ const useObserver = (props) => {
       if(from && to){
         setMounted(true)
         return true
+      } else {
+        setMounted(false)
       }
     }
 
