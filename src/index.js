@@ -1,12 +1,15 @@
 import React, { memo, useLayoutEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
 import arrowCreate, { DIRECTION } from 'arrows-svg'
 
 import { nodeSafe } from './helpers/node'
 import useObserver from './hooks/useObserver'
 
-const Arrow = (props) => {
+const DIRECTION_VALUES = Object.values(DIRECTION)
+
+const Arrow = ({ className, from, to }) => {
   const arrowRef = useRef()
-  const mounted = useObserver(props)
+  const mounted = useObserver({ from, to })
 
   useLayoutEffect(() => {
     if (!mounted) return
@@ -14,14 +17,14 @@ const Arrow = (props) => {
     let arrow
     try {
       arrow = arrowCreate({
-        ...props,
+        className,
         from: {
-          ...props.from,
-          node: nodeSafe(props.from),
+          ...from,
+          node: nodeSafe(from),
         },
         to: {
-          ...props.to,
-          node: nodeSafe(props.to),
+          ...to,
+          node: nodeSafe(to),
         }
       })
     } catch(e){
@@ -35,11 +38,29 @@ const Arrow = (props) => {
       clearInterval(arrow.timer)
       if (arrowRef.current) arrowRef.current.removeChild(arrow.node)
     }
-  }, [mounted, props])
+  }, [className, from, mounted, to])
 
   return (
     <span ref={arrowRef} />
   )
+}
+
+Arrow.propTypes = {
+  className: PropTypes.string,
+  from: PropTypes.shape({
+    direction: PropTypes.oneOf(DIRECTION_VALUES).isRequired,
+    node: PropTypes.any.isRequired,
+    translation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  }).isRequired,
+  to: PropTypes.shape({
+    direction: PropTypes.oneOf(DIRECTION_VALUES).isRequired,
+    node: PropTypes.any.isRequired,
+    translation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  }).isRequired,
+}
+
+Arrow.defaultProps = {
+  className: 'arrow',
 }
 
 export default memo(Arrow)
