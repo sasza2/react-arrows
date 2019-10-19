@@ -28,7 +28,6 @@ const Arrow = ({ className, from, to }) => {
         }
       })
     } catch(e){
-      console.warn(e);
       return;
     }
 
