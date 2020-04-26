@@ -7,6 +7,9 @@ module.exports = {
     filename: 'main.js',
     libraryTarget: 'commonjs2',
   },
+  node: {
+    global: false
+  },
   module: {
     rules: [
       {
