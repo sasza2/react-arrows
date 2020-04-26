@@ -1,73 +1,45 @@
-import React, { memo, useLayoutEffect, useRef, useState } from 'react'
-import isFunction from 'lodash/isFunction'
-import arrowCreate, { DIRECTION } from 'arrows-svg'
+import React, { memo, useRef } from 'react'
+import PropTypes from 'prop-types'
 
-const nodeValue = (node) => (isFunction(node)
-  ? node()
-  : node
-)
+import useArrow from './hooks/useArrow'
 
-const nodeSafe = (point = {}) => nodeValue(point.node)
-
-const useObserver = (props) => {
-  const [mounted, setMounted] = useState(false)
-
-  useLayoutEffect(() => {
-    const observe = () => {
-      const from = nodeSafe(props.from)
-      const to = nodeSafe(props.to)
-      if(from && to){
-        setMounted(true)
-        return true
-      }
-    }
-
-    if (observe()) return
-
-    const timer = setInterval(observe, 150)
-    return () => clearInterval(timer)
-  }, [mounted, props])
-
-  return mounted
-}
-
-const Arrow = (props) => {
+const Arrow = ({
+  className, head, from, to,
+}) => {
   const arrowRef = useRef()
-  const mounted = useObserver(props)
-
-  useLayoutEffect(() => {
-    if (!mounted) return
-    
-    let arrow
-    try {
-      arrow = arrowCreate({
-        ...props,
-        from: {
-          ...props.from,
-          node: nodeSafe(props.from),
-        },
-        to: {
-          ...props.to,
-          node: nodeSafe(props.to),
-        }
-      })
-    } catch(e){
-      console.warn(e);
-      return;
-    }
-
-    if (arrowRef.current) arrowRef.current.appendChild(arrow.node)
-
-    return () => {
-      clearInterval(arrow.timer)
-      if (arrowRef.current) arrowRef.current.removeChild(arrow.node)
-    }
-  }, [mounted, props])
+  useArrow(arrowRef, { className, head, from, to })
 
   return (
     <span ref={arrowRef} />
   )
 }
 
+Arrow.propTypes = {
+  className: PropTypes.string,
+  head: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      func: PropTypes.string,
+      duration: PropTypes.number,
+    }),
+  ]),
+  from: PropTypes.shape({
+    direction: PropTypes.string.isRequired,
+    node: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.object,
+    ]).isRequired,
+    translation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  }).isRequired,
+  to: PropTypes.shape({
+    direction: PropTypes.string.isRequired,
+    node: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.object,
+    ]).isRequired,
+    translation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  }).isRequired,
+}
+
 export default memo(Arrow)
-export { DIRECTION }
+export { DIRECTION, HEAD } from 'arrows-svg'
