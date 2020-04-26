@@ -6,6 +6,7 @@
   "globals": {
     "clearInterval": false,
     "console": false,
+    "document": false,
     "setInterval": false
   },
   "settings": {

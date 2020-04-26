@@ -1,6 +1,4 @@
-import isFunction from 'lodash/isFunction'
-
-const nodeValue = (node) => (isFunction(node)
+const nodeValue = (node) => (typeof node === 'function'
   ? node()
   : node
 )

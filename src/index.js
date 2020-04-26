@@ -1,43 +1,13 @@
-import React, { memo, useLayoutEffect, useRef } from 'react'
+import React, { memo, useRef } from 'react'
 import PropTypes from 'prop-types'
-import arrowCreate, { DIRECTION } from 'arrows-svg'
 
-import { nodeSafe } from './helpers/node'
-import useObserver from './hooks/useObserver'
+import useArrow from './hooks/useArrow'
 
-const DIRECTION_VALUES = Object.values(DIRECTION)
-
-const Arrow = ({ className, from, to }) => {
+const Arrow = ({
+  className, head, from, to,
+}) => {
   const arrowRef = useRef()
-  const mounted = useObserver({ from, to })
-
-  useLayoutEffect(() => {
-    if (!mounted) return
-    
-    let arrow
-    try {
-      arrow = arrowCreate({
-        className,
-        from: {
-          ...from,
-          node: nodeSafe(from),
-        },
-        to: {
-          ...to,
-          node: nodeSafe(to),
-        }
-      })
-    } catch(e){
-      return;
-    }
-
-    if (arrowRef.current) arrowRef.current.appendChild(arrow.node)
-
-    return () => {
-      clearInterval(arrow.timer)
-      if (arrowRef.current) arrowRef.current.removeChild(arrow.node)
-    }
-  }, [className, from, mounted, to])
+  useArrow(arrowRef, { className, head, from, to })
 
   return (
     <span ref={arrowRef} />
@@ -46,21 +16,30 @@ const Arrow = ({ className, from, to }) => {
 
 Arrow.propTypes = {
   className: PropTypes.string,
+  head: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      func: PropTypes.string,
+      duration: PropTypes.number,
+    }),
+  ]),
   from: PropTypes.shape({
-    direction: PropTypes.oneOf(DIRECTION_VALUES).isRequired,
-    node: PropTypes.any.isRequired,
+    direction: PropTypes.string.isRequired,
+    node: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.object,
+    ]).isRequired,
     translation: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
   to: PropTypes.shape({
-    direction: PropTypes.oneOf(DIRECTION_VALUES).isRequired,
-    node: PropTypes.any.isRequired,
+    direction: PropTypes.string.isRequired,
+    node: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.object,
+    ]).isRequired,
     translation: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
 }
 
-Arrow.defaultProps = {
-  className: 'arrow',
-}
-
 export default memo(Arrow)
-export { DIRECTION }
+export { DIRECTION, HEAD } from 'arrows-svg'

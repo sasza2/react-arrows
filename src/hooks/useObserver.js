@@ -2,18 +2,14 @@ import { useLayoutEffect, useState } from 'react'
 
 import { nodeSafe } from '../helpers/node'
 
-const useObserver = (props) => {
+const useObserver = ({ from, to }) => {
   const [mounted, setMounted] = useState(false)
 
   useLayoutEffect(() => {
     const observe = () => {
-      const from = nodeSafe(props.from)
-      const to = nodeSafe(props.to)
-      if(from && to){
+      if(nodeSafe(from) && nodeSafe(to)){
         setMounted(true)
         return true
-      } else {
-        setMounted(false)
       }
     }
 
@@ -21,7 +17,7 @@ const useObserver = (props) => {
 
     const timer = setInterval(observe, 150)
     return () => clearInterval(timer)
-  }, [mounted, props])
+  }, [mounted, from, to])
 
   return mounted
 }
