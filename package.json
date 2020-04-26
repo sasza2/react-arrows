@@ -2,14 +2,27 @@
   "name": "react-arrows",
   "version": "1.0.1",
   "description": "React SVG arrow between two HTML elements",
+  "keywords": [
+    "arrow",
+    "arrows",
+    "svg",
+    "react"
+  ],
   "main": "dist/main.js",
   "scripts": {
     "build": "webpack --mode=production",
     "lint": "eslint src --fix",
     "storybook": "start-storybook"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sasza2/react-arrows.git"
+  },
   "author": "sasza",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sasza2/react-arrows/issues"
+  },
   "dependencies": {
     "arrows-svg": "^1.1.0",
     "prop-types": "^15.0.0"
@@ -30,6 +43,7 @@
     "webpack-cli": "^3.3.11"
   },
   "peerDependencies": {
+    "prop-types": "^15.0.0",
     "react": ">=16.8.6"
   }
 }
