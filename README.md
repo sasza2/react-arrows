@@ -3,7 +3,7 @@ React library for creating SVG arrow between two HTML elements. Positions of ele
 
 !["Arrow"](docs/arrow-1.png?raw=true "Arrow example")
 
-https://codesandbox.io/s/charming-nobel-35voq
+https://codesandbox.io/s/stoic-perlman-6php9
 
 # Installation
 
@@ -50,6 +50,7 @@ import Arrow, { DIRECTION } from 'react-arrows'
     node: () => document.getElementById('to'),
     translation: [0.9, 1],
   }}
+  onChange={...}
 />
 ```
 
