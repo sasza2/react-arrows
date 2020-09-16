@@ -1,6 +1,6 @@
 {
   "name": "react-arrows",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React SVG arrow between two HTML elements",
   "keywords": [
     "arrow",
@@ -24,7 +24,7 @@
     "url": "https://github.com/sasza2/react-arrows/issues"
   },
   "dependencies": {
-    "arrows-svg": "^1.1.0",
+    "arrows-svg": "^1.2.1",
     "prop-types": "^15.0.0"
   },
   "devDependencies": {
