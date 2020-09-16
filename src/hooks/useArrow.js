@@ -4,12 +4,12 @@ import arrowCreate from 'arrows-svg'
 import { nodeSafe } from '../helpers/node'
 import useObserver from './useObserver'
 
-const useArrow = (arrowRef, { className, head, from, to }) => {
-  const mounted = useObserver({ className, head, from, to })
+const useArrow = (arrowRef, { className, head, from, to, onChange }) => {
+  const mounted = useObserver({ from, to })
 
   useLayoutEffect(() => {
     if (!mounted) return
-    
+
     let arrow
     try {
       arrow = arrowCreate({
@@ -22,7 +22,8 @@ const useArrow = (arrowRef, { className, head, from, to }) => {
         to: {
           ...to,
           node: nodeSafe(to),
-        }
+        },
+        onChange,
       })
     } catch(e){
       console.warn(e);
@@ -31,11 +32,8 @@ const useArrow = (arrowRef, { className, head, from, to }) => {
 
     arrowRef.current.appendChild(arrow.node)
 
-    return () => {
-      arrow.clear()
-      arrowRef.current.removeChild(arrow.node)
-    }
-  }, [mounted, className, head, from, to])
+    return arrow.clear
+  }, [mounted, className, head, from, to, onChange])
 }
 
 export default useArrow

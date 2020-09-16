@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import useArrow from './hooks/useArrow'
 
 const Arrow = ({
-  className, head, from, to,
+  className, head, from, to, onChange,
 }) => {
   const arrowRef = useRef()
-  useArrow(arrowRef, { className, head, from, to })
+  useArrow(arrowRef, { className, head, from, to, onChange })
 
   return (
     <span ref={arrowRef} />
@@ -39,6 +39,7 @@ Arrow.propTypes = {
     ]).isRequired,
     translation: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
+  onChange: PropTypes.func,
 }
 
 export default memo(Arrow)

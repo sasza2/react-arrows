@@ -20,16 +20,16 @@ const ArrowStyles = () => (
     .arrow {
       pointer-events: none;
     }
-    
+
     .arrow__path {
       stroke: #000;
       fill: transparent;
       stroke-dasharray: 4 2;
     }
-    
+
     .arrow__head line {
       stroke: #000;
-      stroke-width: 1px;        
+      stroke-width: 1px;
     }
   `}} />
 )
@@ -127,7 +127,7 @@ export const Heads = () => {
         }
         .arrow__head line {
           stroke: #000;
-          stroke-width: 1px;        
+          stroke-width: 1px;
         }
         th, td {
           border: 1px solid #ddd;
@@ -203,7 +203,7 @@ export const Heads = () => {
 export const Interval = () => {
   const [from, setFrom] = useState(null)
   const [to, setTo] = useState(null)
-  
+
   useEffect(() => {
     const randCoordinate = () => parseInt(Math.random() * 400 + 100)
     const randCoordinates = () => ({
