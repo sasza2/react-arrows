@@ -40,10 +40,13 @@ export default {
 };
 
 export const HelloWorld = () => {
-  const fromTranslationX = number('from-translation-x', 10)
+  const fromTranslationX = number('from-translation-x', 1)
   const fromTranslationY = number('from-translation-y', -1.5)
-  const toTranslationX = number('to-translation-x', -5)
-  const toTranslationY = number('to-translation-y', 2)
+  const fromDirection = select('from-direction', Object.values(DIRECTION), DIRECTION.TOP)
+  const toTranslationX = number('to-translation-x', -0.5)
+  const toTranslationY = number('to-translation-y', 1)
+  const toDirection = select('to-direction', Object.values(DIRECTION), DIRECTION.LEFT)
+
   return (
     <div>
       <ArrowStyles />
@@ -80,12 +83,12 @@ export const HelloWorld = () => {
       <Arrow
         className='arrow'
         from={{
-          direction: DIRECTION.TOP,
+          direction: fromDirection,
           node: () => document.getElementById('from'),
           translation: [fromTranslationX, fromTranslationY],
         }}
         to={{
-          direction: DIRECTION.LEFT,
+          direction: toDirection,
           node: () => document.getElementById('to'),
           translation: [toTranslationX, toTranslationY],
         }}
