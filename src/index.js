@@ -1,45 +1,12 @@
-import React, { memo, useRef } from 'react'
-import PropTypes from 'prop-types'
+import { memo } from 'react'
 
 import useArrow from './hooks/useArrow'
 
 const Arrow = ({
   className, head, from, to, onChange,
 }) => {
-  const arrowRef = useRef()
-  useArrow(arrowRef, { className, head, from, to, onChange })
-
-  return (
-    <span ref={arrowRef} />
-  )
-}
-
-Arrow.propTypes = {
-  className: PropTypes.string,
-  head: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({
-      func: PropTypes.string,
-      duration: PropTypes.number,
-    }),
-  ]),
-  from: PropTypes.shape({
-    direction: PropTypes.string.isRequired,
-    node: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.object,
-    ]).isRequired,
-    translation: PropTypes.arrayOf(PropTypes.number).isRequired,
-  }).isRequired,
-  to: PropTypes.shape({
-    direction: PropTypes.string.isRequired,
-    node: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.object,
-    ]).isRequired,
-    translation: PropTypes.arrayOf(PropTypes.number).isRequired,
-  }).isRequired,
-  onChange: PropTypes.func,
+  useArrow({ className, head, from, to, onChange })
+  return null
 }
 
 export default memo(Arrow)

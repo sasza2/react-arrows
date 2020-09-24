@@ -63,13 +63,6 @@ export const HelloWorld = () => {
           height: 150px;
           background-color: green;
         }
-        #from {
-          top: 50px;
-          left: 100px;
-          width: 200px;
-          height: 150px;
-          background-color: green;
-        }
         #to {
           top: 100px;
           left: 400px;

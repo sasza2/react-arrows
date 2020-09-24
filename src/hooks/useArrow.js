@@ -1,18 +1,25 @@
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import arrowCreate from 'arrows-svg'
 
 import { nodeSafe } from '../helpers/node'
 import useObserver from './useObserver'
 
-const useArrow = (arrowRef, { className, head, from, to, onChange }) => {
+const useArrow = ({ className, head, from, to, onChange }) => {
   const mounted = useObserver({ from, to })
+  const arrowRef = useRef();
+
+  useLayoutEffect(() => {
+    if (!arrowRef.current) return
+    arrowRef.current.setProps({
+      className, head, from, to, onChange,
+    })
+  }, [className, head, from, to, onChange])
 
   useLayoutEffect(() => {
     if (!mounted) return
 
-    let arrow
     try {
-      arrow = arrowCreate({
+      arrowRef.current = arrowCreate({
         className,
         head,
         from: {
@@ -30,10 +37,13 @@ const useArrow = (arrowRef, { className, head, from, to, onChange }) => {
       return;
     }
 
-    arrowRef.current.appendChild(arrow.node)
+    document.body.appendChild(arrowRef.current.node)
 
-    return arrow.clear
-  }, [mounted, className, head, from, to, onChange])
+    return () => {
+      arrowRef.current.clear()
+      arrowRef.current = null
+    }
+  }, [mounted])
 }
 
 export default useArrow
